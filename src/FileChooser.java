@@ -8,7 +8,7 @@ public class FileChooser extends Component {
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.setCurrentDirectory(new File(System
 				.getProperty("user.home")));
-		int result = fileChooser.showOpenDialog(this);
+		fileChooser.showOpenDialog(this);
 
 		return fileChooser.getSelectedFile().getAbsolutePath();
 	}
