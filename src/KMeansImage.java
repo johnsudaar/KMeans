@@ -7,6 +7,16 @@ import javax.imageio.ImageIO;
 
 
 public class KMeansImage{
+	
+	public static BufferedImage toImage(int[][] labels, Color[] clusters, BufferedImage image) {
+		BufferedImage next = new BufferedImage(image.getWidth(), image.getHeight(), image.getType());
+		for(int x = 0; x < image.getWidth(); x++) {
+			for(int y = 0; y< image.getHeight(); y++) {
+				next.setRGB(x, y, clusters[labels[x][y]].getRGB());
+			}
+		}
+		return next;
+	}
 	public static void main(String[] args){
 		FileChooser fc = new FileChooser();
 		String path = fc.chooseFile();
@@ -23,14 +33,7 @@ public class KMeansImage{
 		k.Compute();
 		
 		System.out.println("Generate Image");
-		int labels[][] = k.getLabels();
-		Color[] clusters = k.getClusters();
-		BufferedImage next = new BufferedImage(image.getWidth(), image.getHeight(), image.getType());
-		for(int x = 0; x < image.getWidth(); x++) {
-			for(int y = 0; y< image.getHeight(); y++) {
-				next.setRGB(x, y, clusters[labels[x][y]].getRGB());
-			}
-		}
-		ImageViewer.viewImage(next);
+		
+		ImageViewer.viewImage(toImage(k.getLabels(), k.getClusters(), image));
 	}
 }

@@ -76,6 +76,7 @@ public class KMean {
 			clusters_sums_g[i] = BigInteger.ZERO;
 			clusters_sums_b[i] = BigInteger.ZERO;
 		}
+		
 		long[] size = new long[this.nb_clusters];
 		for (int x = 0; x < this.L.length; x++) {
 			for (int y = 0; y < this.L[x].length; y++) {
