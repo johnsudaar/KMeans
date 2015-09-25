@@ -26,7 +26,6 @@ public class KMean {
 					rng.nextInt(this.base.getWidth()),
 					rng.nextInt(this.base.getHeight())));
 		}
-
 		// L initialization
 		this.updateLabel();
 	}
@@ -71,6 +70,12 @@ public class KMean {
 		BigInteger[] clusters_sums_r = new BigInteger[this.nb_clusters];
 		BigInteger[] clusters_sums_g = new BigInteger[this.nb_clusters];
 		BigInteger[] clusters_sums_b = new BigInteger[this.nb_clusters];
+		
+		for(int i = 0; i < this.C.length; i++) {
+			clusters_sums_r[i] = BigInteger.ZERO;
+			clusters_sums_g[i] = BigInteger.ZERO;
+			clusters_sums_b[i] = BigInteger.ZERO;
+		}
 		long[] size = new long[this.nb_clusters];
 		for (int x = 0; x < this.L.length; x++) {
 			for (int y = 0; y < this.L[x].length; y++) {
@@ -83,14 +88,17 @@ public class KMean {
 		}
 		
 		for(int i = 0; i < this.C.length; i++){
-			int r = clusters_sums_r[i].divide(BigInteger.valueOf(size[i])).intValue();
-			int g = clusters_sums_g[i].divide(BigInteger.valueOf(size[i])).intValue();
-			int b = clusters_sums_b[i].divide(BigInteger.valueOf(size[i])).intValue();
-			this.C[i] = new Color(r,g,b);
+			if(size[i] <= 0){
+				int r = clusters_sums_r[i].divide(BigInteger.valueOf(size[i])).intValue();
+				int g = clusters_sums_g[i].divide(BigInteger.valueOf(size[i])).intValue();
+				int b = clusters_sums_b[i].divide(BigInteger.valueOf(size[i])).intValue();
+				this.C[i] = new Color(r,g,b);
+			}
 		}
 	}
 
 	public void Compute() {
+		this.Init();
 		boolean changed = false;
 		int iter = 0;
 		do {
